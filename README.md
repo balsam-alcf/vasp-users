@@ -20,7 +20,7 @@ export n_openmp_threads_per_rank=4
 
 Always set `NPAR = 8`  in the `INCAR` file. Optional parameter is `NCORE = 8`  . `NCORE` is automatically overridden if `(n_openmp_threads_per_rank or OMP_NUM_THREADS) > 1`.  The best set of parameters for that came our of this benchmark are `16` MPI-ranks per core and  `4` OpenMP thread/rank as shown below.
 
-![Bar plot of the total  run times](vasp_benchmarks/h20/)
+![Bar plot of the total  run times](vasp_benchmarks/analysis/benchmark.png)
 
 
 For  VASP tutorials the users are referred to their manual pages[3].  The detailed overview of the best practices of using VASP on Intel KNL is provided by [NERSC][4].  Our benchmarks are based on a number of best practices recommended by the aforementioned slides.
