@@ -19,15 +19,16 @@ export n_openmp_threads_per_rank=4
 ```
 
 **TIP1: [Always set] `NPAR = 8`  in the `INCAR` file.**
- Optional parameter is `NCORE = 8`  . `NCORE` is automatically overridden if `(n_openmp_threads_per_rank or OMP_NUM_THREADS) > 1`. 
-**TIP2: The best set of parameters  that came out of this benchmark are `16` MPI-ranks per core and  `4` OpenMP thread/rank as shown below. **
+
+**TIP2: The best set of parameters  that came out of this benchmark are `16` MPI-ranks per core and  `4` OpenMP thread/rank as shown below.**
+
+**TIP3: To restart a VASP run please use the [ISTART parameter] in INCAR file. A detailed discussion of the same is available in the online manual.**
 
 ![Bar plot of the total  run times](vasp_benchmarks/analysis/benchmark.png)
 
+Optional parameter is `NCORE = 8`  . `NCORE` is automatically overridden if `(n_openmp_threads_per_rank or OMP_NUM_THREADS) > 1`. 
+For  VASP tutorials the users are referred to the online [manual pages].  The detailed overview of the best practices of using VASP on Intel KNL is provided by [NERSC].  Our benchmarks are based on a number of best practices recommended by the aforementioned slides.
 
-For  VASP tutorials the users are referred to their [manual pages].  The detailed overview of the best practices of using VASP on Intel KNL is provided by [NERSC].  Our benchmarks are based on a number of best practices recommended by the aforementioned slides.
-
-**TIP3: To restart a VASP run please use the [ISTART parameter] in INCAR file. A detailed discussion of the same is available in the online manual**
 
 [VASP]: https://en.wikipedia.org/wiki/Vienna_Ab_initio_Simulation_Package
 [Always set]: https://cms.mpi.univie.ac.at/wiki/index.php/NPAR
