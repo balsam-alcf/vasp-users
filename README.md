@@ -2,12 +2,12 @@
 
 **Author**: Ganesh Sivaraman (gsivaraman@anl.gov)
 
-The [Vienna Ab initio Simulation Package [VASP][1], is a package for performing ab initio quantum mechanical calculations using either Vanderbilt pseudopotentials, or the projector augmented wave method, and a plane wave basis set.  We will cover some of the safe practices for using VASP on ALCF Theta HPC. 
+The [Vienna Ab initio Simulation Package [VASP], is a package for performing ab initio quantum mechanical calculations using either Vanderbilt pseudopotentials, or the projector augmented wave method, and a plane wave basis set.  We will cover some of the safe practices for using VASP on ALCF Theta HPC. 
 
 The reference dataset for this discussion can be found in `vasp_benchmarks/h20/`. There are two fundamental levels of parameters that one must be aware of while running the VASP. The first level refers to the parameters that are embedded in the VASP `INCAR` file. 
 
 ```bash
-NPAR = 8  #--> i.e.  \sqrt{\#ofcore}
+NPAR = 8  #--> i.e.  [\sqrt{\#ofcore}]
 NCORE = 8 #--> Optional parameter 
 ```
 
@@ -23,14 +23,13 @@ Always set `NPAR = 8`  in the `INCAR` file. Optional parameter is `NCORE = 8`  .
 ![Bar plot of the total  run times](vasp_benchmarks/analysis/benchmark.png)
 
 
-For  VASP tutorials the users are referred to their [manual pages][2].  The detailed overview of the best practices of using VASP on Intel KNL is provided by [NERSC][4].  Our benchmarks are based on a number of best practices recommended by the aforementioned slides.
+For  VASP tutorials the users are referred to their [manual pages].  The detailed overview of the best practices of using VASP on Intel KNL is provided by [NERSC].  Our benchmarks are based on a number of best practices recommended by the aforementioned slides.
 
 
-## References
-[1]: https://en.wikipedia.org/wiki/Vienna_Ab_initio_Simulation_Package
-[2]: https://cms.mpi.univie.ac.at/wiki/index.php/NPAR
+[VASP]: https://en.wikipedia.org/wiki/Vienna_Ab_initio_Simulation_Package
+[\sqrt{\#ofcore}]: https://cms.mpi.univie.ac.at/wiki/index.php/NPAR
 [manual pages]: http://cms.mpi.univie.ac.at/wiki/index.php/The_VASP_Manual
-[4]: https://www.nersc.gov/assets/Uploads/Using-VASP-at-NERSC-20180629.pdf
+[NERSC]: https://www.nersc.gov/assets/Uploads/Using-VASP-at-NERSC-20180629.pdf
 
 # Launching VASP with Balsam workflow manager @ ALCF Theta 
 
