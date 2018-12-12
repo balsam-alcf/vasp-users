@@ -1,0 +1,17 @@
+*.ipynb
+*.dat
+*.cobaltlog
+*.error
+WAVECAR
+XDATCAR
+CHG
+CHGCAR
+POTCAR
+IBZKPT
+OSZICAR
+EIGENVAL
+*.xml
+REPORT
+DOSCAR
+PCDAT
+CONTCAR
