@@ -7,7 +7,7 @@ The [Vienna Ab initio Simulation Package [VASP], is a package for performing ab 
 The reference dataset for this discussion can be found in `vasp_benchmarks/h20/`. There are two fundamental levels of parameters that one must be aware of while running the VASP. The first level refers to the parameters that are embedded in the VASP `INCAR` file. 
 
 ```bash
-NPAR = 8  #--> i.e.  [\sqrt{\#ofcore}]
+NPAR = 8  #--> i.e.  \sqrt{\#ofcore}
 NCORE = 8 #--> Optional parameter 
 ```
 
@@ -18,7 +18,7 @@ export n_mpi_ranks_per_node=16
 export n_openmp_threads_per_rank=4
 ```
 
-Always set `NPAR = 8`  in the `INCAR` file. Optional parameter is `NCORE = 8`  . `NCORE` is automatically overridden if `(n_openmp_threads_per_rank or OMP_NUM_THREADS) > 1`.  The best set of parameters for that came our of this benchmark are `16` MPI-ranks per core and  `4` OpenMP thread/rank as shown below.
+[Always set] `NPAR = 8`  in the `INCAR` file. Optional parameter is `NCORE = 8`  . `NCORE` is automatically overridden if `(n_openmp_threads_per_rank or OMP_NUM_THREADS) > 1`.  The best set of parameters for that came our of this benchmark are `16` MPI-ranks per core and  `4` OpenMP thread/rank as shown below.
 
 ![Bar plot of the total  run times](vasp_benchmarks/analysis/benchmark.png)
 
@@ -27,7 +27,7 @@ For  VASP tutorials the users are referred to their [manual pages].  The detaile
 
 
 [VASP]: https://en.wikipedia.org/wiki/Vienna_Ab_initio_Simulation_Package
-[\sqrt{\#ofcore}]: https://cms.mpi.univie.ac.at/wiki/index.php/NPAR
+[Always set]: https://cms.mpi.univie.ac.at/wiki/index.php/NPAR
 [manual pages]: http://cms.mpi.univie.ac.at/wiki/index.php/The_VASP_Manual
 [NERSC]: https://www.nersc.gov/assets/Uploads/Using-VASP-at-NERSC-20180629.pdf
 
