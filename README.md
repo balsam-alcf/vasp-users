@@ -20,7 +20,7 @@ export n_openmp_threads_per_rank=4
 
 Always set `NPAR = 8`  in the `INCAR` file. Optional parameter is `NCORE = 8`. `NCORE` is automatically overridden if `(n_openmp_threads_per_rank or OMP_NUM_THREADS) > 1`. The analysis of the benchmark can be seen below.
 
-![Bar plot of the total  run times](VASP_BALSAM/vasp_benchmarks/analysis/benchmark.png)
+![Bar plot of the total  run times](vasp_benchmarks/analysis/benchmark.png)
 
 16 MPI-ranks per core and  4 OpenMP thread/rank seems to be the best set of parameters for this benchmark.
 
