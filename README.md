@@ -23,13 +23,13 @@ Always set `NPAR = 8`  in the `INCAR` file. Optional parameter is `NCORE = 8`  .
 ![Bar plot of the total  run times](vasp_benchmarks/analysis/benchmark.png)
 
 
-For  VASP tutorials the users are referred to their manual pages[3].  The detailed overview of the best practices of using VASP on Intel KNL is provided by [NERSC][4].  Our benchmarks are based on a number of best practices recommended by the aforementioned slides.
+For  VASP tutorials the users are referred to their [manual pages][2].  The detailed overview of the best practices of using VASP on Intel KNL is provided by [NERSC][4].  Our benchmarks are based on a number of best practices recommended by the aforementioned slides.
 
 
 ## References
 [1]: https://en.wikipedia.org/wiki/Vienna_Ab_initio_Simulation_Package
 [2]: https://cms.mpi.univie.ac.at/wiki/index.php/NPAR
-[3]: http://cms.mpi.univie.ac.at/wiki/index.php/The_VASP_Manual
+[manual pages]: http://cms.mpi.univie.ac.at/wiki/index.php/The_VASP_Manual
 [4]: https://www.nersc.gov/assets/Uploads/Using-VASP-at-NERSC-20180629.pdf
 
 # Launching VASP with Balsam workflow manager @ ALCF Theta 
