@@ -41,7 +41,7 @@ For  VASP tutorials the users are referred to the online [manual pages].  The de
 
 # Launching VASP with Balsam Workflow Manager @ ALCF Theta 
 
-In this section, We would see how to combined the knowledge gaining in launching single VASP jobs on Theta be used to running the same in ensemble mode using the [Balsam HPC workflow]. The reference dataset for this discussion can be found in The reference dataset for this discussion can be found in `vasp_balsam/h20/` and the balsam script in `vasp_balsam/vasp_to_balsamDB.py`. This script transfers individual VASP runs one by one in to a Balsam database. 
+In this section, We would see how to combine the knowledge gained so far in launching single VASP jobs on Theta, to be used for running the multiple jobs in ensemble mode using the [Balsam HPC workflow]. The reference dataset for this discussion can be found in The reference dataset for this discussion can be found in `vasp_balsam/h20/` and the balsam script in `vasp_balsam/vasp_to_balsamDB.py`. This script transfers individual VASP runs one by one in to a Balsam database. 
 
 We will start with a brief discussion on the example python script. In this example, we will assume jobs belong three categories i.e. `'S', 'M', 'L'`. Each of them are classified based on different run times and resource requirement. For example the individual 'S'mall size jobs require just 10 minutes to converge ionic steps and runs on two nodes. There are 8 such jobs in our example. Similarly from a basic benchmark as shown in previous steps we can categorize jobs and create complex tree like run maps with in Balsam. Accordingly modify the follow lines in the script. 
 
