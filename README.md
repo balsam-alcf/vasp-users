@@ -124,8 +124,7 @@ top-level directory and create a job for each subfolder if it contains a `"INCAR
 file. The script checks for already-registered jobs to avoid duplicating a job for
 the same folder.
 
-We can invoke this script by providing two arguments the top-level folder to search with 
-The script is invoked by providing two arguments: 
+We can invoke this script by providing two arguments the top-level folder:
 
 - `--top-dir` gives the top-level directory which is scanned recursively and
   searched for subdirectories containing `INCAR` files.
