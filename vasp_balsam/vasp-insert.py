@@ -1,3 +1,13 @@
+'''Generic script to walk through a directory and create BalsamJobs for each
+folder containing an input file.
+
+The essential application parameters are given as module-level constants
+(all-caps) below.  
+
+The script is called with a --top-dir argument, which causes it to recursively
+visit each subfolder of top-dir and search for a file matching INPUTNAME.  If
+this file exists, a BalsamJob is created for the subfolder.
+'''
 import argparse
 import os
 from balsam.core.models import BalsamJob, ApplicationDefinition
