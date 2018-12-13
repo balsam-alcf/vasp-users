@@ -123,6 +123,8 @@ Submit OK: Qlaunch {   'command': '/lus/theta-fs0/~/testdb/qsubmit/qlaunch1.sh',
 
 **TIP5: To check the convergence of VASP run `fgrep "Total CPU time used"   PATH/S/*/OUTCAR  | wc -l`. This should give you an idea of total number of folders that converged.** 
 
+**Warning: POTCAR cannot be provided due to licensing issues. Copy your own!`.**
+
 **Warning: Do not mix different versions of `Python`.**
 
 
