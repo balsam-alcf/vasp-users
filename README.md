@@ -14,15 +14,17 @@ NCORE = 8 #--> Optional parameter
 The second level refers to the parameters that regulate the aprun parameters. The following two parameters are safe recommendation to be kept in the  `submit-theta.sh` script. For our benchmark dataset the following parameter was found to be optimal. 
 
 ```bash
-export n_mpi_ranks_per_node=16
-export n_openmp_threads_per_rank=4
+export n_mpi_ranks_per_node=32
+export n_openmp_threads_per_rank=2
 ```
 
 **TIP1: [Always set] `NPAR = 8`  in the `INCAR` file.**
 
-**TIP2: The best set of parameters  that came out of this benchmark are `16` MPI-ranks per core and  `4` OpenMP thread/rank as shown below.**
+**TIP2: The best set of parameters  that came out of this benchmark are `32` MPI-ranks per core and  `2` OpenMP thread/rank as shown below.**
 
 **TIP3: To restart a VASP run please use the [ISTART parameter] in INCAR file. A detailed discussion of the same is available in the online manual.**
+
+**Warning : The `64` MPI-ranks per core and  `1` OpenMP thread/rank are not recommended as per  VASP manual and our benchmarks exited with out success. **
 
 ![Bar plot of the total  run times](vasp_benchmarks/analysis/benchmark.png)
 
