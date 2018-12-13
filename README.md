@@ -72,7 +72,9 @@ permissions can be easily set here for collaboration with other users. Once a
 database is created, it will persist on disk and hold the entire state and
 history of your workflow, so that you can easily track a large campaign of jobs
 over the course of many weeks and Cobalt job submissions.
-{: .note}
+
+**Note:** To connect to an existing database in future sessions, do not reinitialize it, but
+simply activate the server with the second `source balsamactivate` command.
 
 
 ## Adding VASP calculations to Balsam: simple case
@@ -132,7 +134,6 @@ The script in `vasp_balsam/vasp_to_balsamDB.py` provides this flexibility.
 **Note:** The runtimes are only estimates provided for Balsam scheduling, which
 is not used in this tutorial. The actual values have no bearing on how long
 your jobs will actually run for (i.e. you can severely over or under-estimate the runtime).  
-{: .note}
 
 
 ```python
