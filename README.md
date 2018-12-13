@@ -48,8 +48,31 @@ can be found in `vasp_balsam/h20/`. We are assuming that a large directory of ca
 inputs already exists here, and we want to run VASP once in each subfolder that contains an
 *INCAR* file.  
 
-The first step is to define each calculation as a **BalsamJob** object in the database. Let's get
-started by loading the necessary Balsam modules on Theta.
+This straightforward to do with Balsam and consists of the following steps:
+
+1. Initialize a new Balsam database for your project 
+2. Define each calculation as a **BalsamJob** object in the database. 
+3. Submit Balsam **Launcher** jobs to actually run the calculations! 
+
+Letting Balsam run things for you provides several benefits:
+
+- You no longer need to think about writing shell scripts for each job: Balsam handles
+the `qsub` and `aprun` commands for you.
+- Balsam automatically tracks the state of each calculation: you get useful logs from
+failed runs, automatic-retry of timed-out runs, and so on
+- The Django/SQL backend of Balsam makes it easy to query your workflow  status from Python
+and make modifications
+- When you feel comfortable, it's easy to add post-processing logic to automate handling errors or
+parse calculation output and put it somewhere else
+- The Balsam DB contains a Postgres JSONB datastore that lets you associate arbitrary data with each job,
+using the familiar Python dictionary data structure.  Subsequent queries are efficient and simple like:
+`BalsamJob.objects.filter(data__scf_energy__lte=-1000.0)`. 
+- Execution metadata is automatically recorded for you and Balsam makes it easy
+  to visualize detailed project statistics like job throughput and compute node
+  utilization over time. This granularity of information for ensemble jobs is otherwise
+  very hard to obtain.
+
+Let's get started by loading the necessary Balsam modules on Theta.
 
 ```bash
 module purge
@@ -207,9 +230,21 @@ The `command` shows a path to a script named
 You can modify the template of this script (e.g. to define global environment variables or load
 modules necessary for the workflow) located in `~/.balsam/job-templates`.
 
-**TIP4: Run `watch balsam ls --by-states` to see  a summary of the job submission.** 
+**TIP4: Run `watch balsam ls --by-states` to see  a summary of the job submission and count how many jobs are finished/running/failed.** 
 
-**TIP5: To check the convergence of VASP run `fgrep "Total CPU time used"   PATH/S/*/OUTCAR  | wc -l`. This should give you an idea of total number of folders that converged.** 
+**TIP5: For quick debugging, `balsam ls --state FAILED --history` will show the tail of stdout/stderr from each failed job.** 
+
+**TIP6: To reset FAILED jobs for running again, you may want to use the Python API as shown below.**
+
+```python
+from balsam.launcher.dag import BalsamJob
+failed = BalsamJob.objects.filter(state=FAILED)
+failed = failed.filter(name__icontains='sim3', workflow='test') # optional; additional filters
+BalsamJob.batch_update_state(failed, 'RESTART_READY')
+
+```
+
+**TIP7: To confirm the convergence of VASP run `fgrep "Total CPU time used"   PATH/S/*/OUTCAR  | wc -l`. This should give you an idea of total number of folders that converged. This should agree with the JOB_FINISHED count from balsam ls --by-states command** 
 
 **Warning: POTCAR cannot be provided due to licensing issues. Copy your own!`.**
 
