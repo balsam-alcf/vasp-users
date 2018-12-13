@@ -119,8 +119,8 @@ TPR = 2 # Number of OpenMP threads per MPI rank
 ```
 
 The goal is to create one BalsamJob for each subdirectory containing a filename
-matching `INPUTNAME`. In our example, the script will visit each subfolder of some
-top-level directory and create a job for each subfolder if it contains a `"INCAR"` 
+matching `INPUTNAME`. In our example, the script will visit each subfolder of
+`vasp_balsam/h20` and create a job for each subfolder if it contains a `"INCAR"` 
 file. The script checks for already-registered jobs to avoid duplicating a job for
 the same folder.
 
@@ -132,10 +132,10 @@ We can invoke this script by providing two arguments:
   is for organizational purposes and facilitates future database queries, so
   name it however you see fit.
 
-Let's try running the script in the current directory:
+Let's try running the script for this tutorial example:
 
 ```bash
-python vasp-insert.py --top-dir=. --wf-tag=test  # All subfolders of cwd loaded to DB 
+python vasp_balsam/vasp-insert.py --top-dir=vasp_balsam/h20 --wf-tag=test  # All subfolders of cwd loaded to DB 
 balsam ls # list all the jobs that were added to the DB
 balsam ls --help # show many flexible options for listing jobs
 ```
