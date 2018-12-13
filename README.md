@@ -37,13 +37,102 @@ For  VASP tutorials the users are referred to the online [manual pages].  The de
 [manual pages]: http://cms.mpi.univie.ac.at/wiki/index.php/The_VASP_Manual
 [NERSC]: https://www.nersc.gov/assets/Uploads/Using-VASP-at-NERSC-20180629.pdf
 [ISTART parameter]: http://cms.mpi.univie.ac.at/wiki/index.php/ISTART
-[Balsam HPC workflow]: https://balsam.alcf.anl.gov/
+[Balsam]: https://balsam.alcf.anl.gov/
 
 # Launching VASP with Balsam Workflow Manager @ ALCF Theta 
 
-In this section, We would see how to combined the knowledge gaining in launching single VASP jobs on Theta be used to running the same in ensemble mode using the [Balsam HPC workflow]. The reference dataset for this discussion can be found in The reference dataset for this discussion can be found in `vasp_balsam/h20/` and the balsam script in `vasp_balsam/vasp_to_balsamDB.py`. This script transfers individual VASP runs one by one in to a Balsam database. 
+## Getting started with Balsam on Theta
+In this section, we use the [Balsam] tool to manage running a large ensemble of
+VASP jobs on Theta over time.  The reference dataset for this discussion
+can be found in `vasp_balsam/h20/`. We are assuming that a large directory of calculation
+inputs already exists here, and we want to run VASP once in each subfolder that contains an
+*INCAR* file.  
 
-We will start with a brief discussion on the example python script. In this example, we will assume jobs belong three categories i.e. `'S', 'M', 'L'`. Each of them are classified based on different run times and resource requirement. For example the individual 'S'mall size jobs require just 10 minutes to converge ionic steps and runs on two nodes. There are 8 such jobs in our example. Similarly from a basic benchmark as shown in previous steps we can categorize jobs and create complex tree like run maps with in Balsam. Accordingly modify the follow lines in the script. 
+The first step is to define each calculation as a **BalsamJob** object in the database. Let's get
+started by loading the necessary Balsam modules on Theta.
+
+```bash
+module purge
+module load balsam
+module load cray-python/3.6.1.1
+```
+
+Once the modules are loaded, we can create a new Balsam database for our
+project: 
+
+```bash
+balsam init /projects/myProject/testdb  ## Create a new Balsam DB
+source balsamactivate testdb
+```
+
+**Note:** This database can live anywhere on the Theta filesystem. Preferably,
+it should be created in the /projects/ subfolder that belongs to your ALCF
+project. This file system is better suited for production, and group
+permissions can be easily set here for collaboration with other users. Once a
+database is created, it will persist on disk and hold the entire state and
+history of your workflow, so that you can easily track a large campaign of jobs
+over the course of many weeks and Cobalt job submissions.
+{: .note}
+
+
+## Adding VASP calculations to Balsam: simple case
+While it is possible to add jobs to Balsam with the `balsam job` command, this
+is cumbersome for a large number of calculations.  Let's automate the process
+with a Python script.  We start with the simplest example in
+`vasp_balsam/vasp-insert.py`.  Each calculation is assumed to take the same
+`aprun` parameters and differ only in the working directory. These parameters
+are defined as module-level constants in the script as follows:
+
+```python
+EXE_PATH = '/soft/applications/vasp/vasp6-dev/bin/vasp_std'
+APPNAME = 'vasp' # Any alias you want
+INPUTNAME = 'INCAR' # Create a job for each folder that holds this filename
+NNODES = 4 # Number of nodes to run on
+RPN = 32 # Number of MPI ranks per node
+TPR = 2 # Number of OpenMP threads per MPI rank
+
+```
+
+The goal is to create one BalsamJob for each subdirectory containing a filename
+matching `INPUTNAME`. In our example, the script will visit each subfolder of some
+top-level directory and create a job for each subfolder if it contains a `"INCAR"` 
+file. The script checks for already-registered jobs to avoid duplicating a job for
+the same folder.
+
+We can invoke this script by providing two arguments the top-level folder to search with 
+The script is invoked by providing two arguments: 
+
+- `--top-dir` gives the top-level directory which is scanned recursively and
+  searched for subdirectories containing `INCAR` files.
+- `--wf-tag` should be a unique tag categorizing this batch of jobs to run. It
+  is for organizational purposes and facilitates future database queries, so
+  name it however you see fit.
+
+Let's try running the script in the current directory:
+
+```bash
+python vasp-insert.py --top-dir=. --wf-tag=test  # All subfolders of cwd loaded to DB 
+balsam ls # list all the jobs that were added to the DB
+balsam ls --help # show many flexible options for listing jobs
+```
+
+Once some jobs are in the database, we simply need to fire off a `balsam
+launcher` job to actually run them! Skip ahead to the section **Launching and 
+Monitoring Jobs** if you are ready to try this out.
+
+## Tuning number of nodes according to calculation subdirectory
+In this example, we will assume jobs belong three categories i.e. `'S', 'M',
+'L'`. Each of them are classified based on different run times and resource
+requirement. For example the individual 'S'mall size jobs require just 10
+minutes to converge ionic steps and runs on two nodes. There are 8 such jobs in
+our example. Similarly from a basic benchmark as shown in previous steps we can
+categorize jobs and create complex tree like run maps with in Balsam.
+The script in `vasp_balsam/vasp_to_balsamDB.py` provides this flexibility. 
+
+**Note:** The runtimes are only estimates provided for Balsam scheduling, which
+is not used in this tutorial. The actual values have no bearing on how long
+your jobs will actually run for (i.e. you can severely over or under-estimate the runtime).  
+{: .note}
 
 
 ```python
@@ -79,17 +168,7 @@ post_error_handler = False, #-->If 'True' add user defined function to handle er
 ```
 Now that we have went through explaining the script, let us look at how to run the script and query the status. Load the necessary modules and make sure all of the above changes are added to the python script. 
 
-```bash
-module purge
-module load balsam
-module load cray-python/3.6.1.1
-```
 
-Once the modules are loaded, we will create a balsam database. 
-```bash
-balsam init testdb  ## Created a new Balsam DB with the name testdb.
-source balsamactivate testdb 
-```
 In case DB was already created then only second line needs to be run (especially to log back in to Theta and check job status on an existing Balsam submission. Next we will check the status of the database  and then run the python script to load all of our Jobs in to the database. 
 
 ```bash
@@ -97,12 +176,15 @@ balsam ls --verbose         #--> Check status
 python vasp_to_balsamDB.py  #---> YAY! Everything loaded to DB 
 ```
 
+## Launching and monitoring jobs
+
 Finally we will submit the list stored in the database in to the Theta Cobalt job queue (i.e. similar to `qsub`). 
 
 ```bash
 balsam submit-launch -t 60 -n 08  -q debug-cache-quad  --job-mode mpi -A PROJECTNAME #-->change  the value to -A parameter
 ```
-The last run should produce an output  as shown below. 
+
+The last run should produce an output as shown below. 
 
 ```bash
 Submit OK: Qlaunch {   'command': '/lus/theta-fs0/~/testdb/qsubmit/qlaunch1.sh',
@@ -118,6 +200,11 @@ Submit OK: Qlaunch {   'command': '/lus/theta-fs0/~/testdb/qsubmit/qlaunch1.sh',
     'wall_minutes': 60,
     'wf_filter': ''}
 ```
+
+The `command` shows a path to a script named
+`qlaunchX.sh` which is the *actual* shell script that was submitted to Cobalt by Balsam on your behalf.
+You can modify the template of this script (e.g. to define global environment variables or load
+modules necessary for the workflow) located in `~/.balsam/job-templates`.
 
 **TIP4: Run `watch balsam ls --by-states` to see  a summary of the job submission.** 
 
