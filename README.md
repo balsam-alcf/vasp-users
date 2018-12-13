@@ -39,7 +39,7 @@ For  VASP tutorials the users are referred to the online [manual pages].  The de
 [ISTART parameter]: http://cms.mpi.univie.ac.at/wiki/index.php/ISTART
 [Balsam HPC workflow]: https://balsam.alcf.anl.gov/
 
-# Launching VASP with Balsam workflow manager @ ALCF Theta 
+# Launching VASP with Balsam Workflow Manager @ ALCF Theta 
 
 In this section, We would see how to combined the knowledge gaining in launching single VASP jobs on Theta be used to running the same in ensemble mode using the [Balsam HPC workflow]. The reference dataset for this discussion can be found in The reference dataset for this discussion can be found in `vasp_balsam/h20/` and the balsam script in `vasp_balsam/vasp_to_balsamDB.py`. This script transfers individual VASP runs one by one in to a Balsam database. 
 
