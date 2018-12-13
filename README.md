@@ -73,9 +73,9 @@ TPR = 2  #--> Threads from our plot
 Now let us look at some Balsam specific parameters. 
 
 ```python
-auto_timeout_retry = True, #--> Retry job in case of aprun time outs
+auto_timeout_retry = True, #-->If 'True', retry job in case of aprun time outs
 post_timeout_handler = False,
-post_error_handler = False, #-->If set to 'True' add user defined function to handle error!
+post_error_handler = False, #-->If 'True' add user defined function to handle error!
 ```
 Now that we have went through explaining the script, let us look at how to run the script and query the status. Load the necessary modules and make sure all of the above changes are added to the python script. 
 
@@ -119,11 +119,11 @@ Submit OK: Qlaunch {   'command': '/lus/theta-fs0/~/testdb/qsubmit/qlaunch1.sh',
     'wf_filter': ''}
 ```
 
-*TIP4: Run `watch balsam ls --by-states` to see  a summary of the job submission* 
+**TIP4: Run `watch balsam ls --by-states` to see  a summary of the job submission*.* 
 
-*TIP5: To check the convergence of VASP run `fgrep "Total CPU time used"   PATH/S/*/OUTCAR  | wc -l`. This should give you an idea of total number of folders that converged.* 
+**TIP5: To check the convergence of VASP run `fgrep "Total CPU time used"   PATH/S/*/OUTCAR  | wc -l`. This should give you an idea of total number of folders that converged.** 
 
-*Warning: Do not mix different versions of `Python`.*
+**Warning: Do not mix different versions of `Python`.**
 
 
 
