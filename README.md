@@ -119,7 +119,7 @@ Submit OK: Qlaunch {   'command': '/lus/theta-fs0/~/testdb/qsubmit/qlaunch1.sh',
     'wf_filter': ''}
 ```
 
-**TIP4: Run `watch balsam ls --by-states` to see  a summary of the job submission*.* 
+**TIP4: Run `watch balsam ls --by-states` to see  a summary of the job submission.** 
 
 **TIP5: To check the convergence of VASP run `fgrep "Total CPU time used"   PATH/S/*/OUTCAR  | wc -l`. This should give you an idea of total number of folders that converged.** 
 
