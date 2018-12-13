@@ -1,6 +1,6 @@
 # VASP @ ALCF Theta 
 
-**Author**: Ganesh Sivaraman (gsivaraman@anl.gov)
+**Authors**: Ganesh Sivaraman (gsivaraman@anl.gov), Misha Salim (msalim@anl.gov)
 
 The Vienna Ab initio Simulation Package [VASP], is a package for performing ab initio quantum mechanical calculations using either Vanderbilt pseudopotentials, or the projector augmented wave method, and a plane wave basis set.  We will cover some of the safe practices for using VASP on ALCF Theta HPC. 
 
