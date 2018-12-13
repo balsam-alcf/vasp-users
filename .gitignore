@@ -15,3 +15,5 @@ REPORT
 DOSCAR
 PCDAT
 CONTCAR
+.DS_Store
+.gitignore
