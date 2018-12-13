@@ -207,7 +207,7 @@ Finally we will submit the list stored in the database in to the Theta Cobalt jo
 balsam submit-launch -t 60 -n 08  -q debug-cache-quad  --job-mode mpi -A PROJECTNAME #-->change  the value to -A parameter
 ```
 
-The last run should produce an output as shown below. 
+The last run should produce an output as shown below.  
 
 ```bash
 Submit OK: Qlaunch {   'command': '/lus/theta-fs0/~/testdb/qsubmit/qlaunch1.sh',
