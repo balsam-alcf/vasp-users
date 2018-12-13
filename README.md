@@ -24,7 +24,7 @@ export n_openmp_threads_per_rank=2
 
 **TIP3: To restart a VASP run please use the [ISTART parameter] in INCAR file. A detailed discussion of the same is available in the online manual.**
 
-**Warning : The `64` MPI-ranks per core and  `1` OpenMP thread/rank are not recommended as per  VASP manual and our benchmarks exited with out success. **
+**Warning : The `64` MPI-ranks per core and  `1` OpenMP thread/rank are not recommended as per  VASP manual and our benchmarks exited with out success.**
 
 ![Bar plot of the total  run times](vasp_benchmarks/analysis/benchmark.png)
 
